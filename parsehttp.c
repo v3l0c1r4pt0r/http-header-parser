@@ -18,6 +18,10 @@ int main(int argc, char **argv)
     fprintf(stderr, "%s: insufficient argument\n", argv[0]);
     return 1;
   }
+
+  uint8_t flags = FLAG_NONE;
+  /* TODO: do getopt */
+
   char *filename = argv[1];
 
   /* if fname != "-" then open file for reading */
@@ -31,7 +35,7 @@ int main(int argc, char **argv)
     }
   }
 
-  int res = http_read_file(file);
+  int res = http_read_file(file, flags);
   if(res)
   {
     fprintf(stderr, "%s: something gone wrong, bye!", argv[0]);

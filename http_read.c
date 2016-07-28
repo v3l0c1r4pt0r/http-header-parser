@@ -5,6 +5,9 @@
 #include "http_read.h"
 #include "utils.h"
 
+const uint8_t FLAG_NONE = 0;
+const uint8_t FLAG_ENVI = 1;
+
 /**
  * \brief read http packet sequentially from stream
  *
@@ -12,7 +15,7 @@
  *
  * \return success indicator
  */
-int http_read_file(FILE *file)
+int http_read_file(FILE *file, uint8_t flags)
 {
   /* read header line by line */
   char *buffer = NULL;
@@ -27,7 +30,14 @@ int http_read_file(FILE *file)
       break;
     }
     /* extract variable and set it in environment */
-    fprintf(stderr, "%s\n", buffer);
+    if(flags & FLAG_ENVI)
+    {
+      /* TODO: fill caller env */
+      fprintf(stderr, "stub!\n");
+      return -1;
+    } else {
+      fprintf(stderr, "%s\n", buffer);
+    }
     free(buffer);
     buffer = NULL;
   }
