@@ -21,6 +21,14 @@ int http_read_file(FILE *file, uint8_t flags)
   /* read header line by line */
   char *buffer = NULL;
   int res = 0;
+	res = next_line(file, &buffer);
+	if(res)
+	{
+		/* error */
+		return res;
+	}
+	/* TODO: parse HTTP version header */
+	free(buffer);
   while(!(res = next_line(file, &buffer)))
   {
     /* break on empty line */
@@ -31,13 +39,10 @@ int http_read_file(FILE *file, uint8_t flags)
       break;
     }
     /* extract variable and set it in environment */
-    if(flags & FLAG_ENVI)
-    {
-      /* TODO: fill caller env */
-      fprintf(stderr, "stub!\n");
-      return -1;
-    } else {
-      fprintf(stderr, "%s\n", buffer);
+    if((flags & FLAG_ENVI) && (res = set_env(buffer)) && ! (flags & FLAG_QUET))
+		{
+			fprintf(stderr, "Error %d while setting variable in environment!\n", res);
+			return res;
     }
     free(buffer);
     buffer = NULL;

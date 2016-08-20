@@ -17,4 +17,13 @@ static const char CRLF[3] = "\r\n";
  */
 int next_line(FILE *file, char **outbuf);
 
+/**
+ * \brief Parse line and set it in caller's environment
+ *
+ * \param line to parse
+ *
+ * \return 0 if line was valid and successfully saved in environment
+ */
+int set_env(char *line);
+
 #endif // UTILS_H

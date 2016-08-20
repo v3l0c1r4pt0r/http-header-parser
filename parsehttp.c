@@ -67,5 +67,11 @@ int main(int argc, char **argv)
   {
     fclose(file);
   }
+
+  /* and execute new shell to preserve environment in case of updating it */
+  if(flags & FLAG_ENVI)
+  {
+    system("$SHELL -i");
+  }
   return 0;
 }
