@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -18,7 +19,7 @@ int main(int argc, char **argv)
 
   uint8_t flags = FLAG_NONE;
   int opt;
-  while ((opt = getopt(argc, argv, "eq")) != -1) {
+  while ((opt = getopt(argc, argv, "eqh")) != -1) {
     switch (opt) {
       case 'e':
         flags |= FLAG_ENVI;
@@ -27,9 +28,21 @@ int main(int argc, char **argv)
         flags |= FLAG_QUET;
         errs = fopen("/dev/null","w");
         break;
+      case 'h':
+        printf("Usage: %s [-eqh] filename|-\n", argv[0]);
+        printf(
+            "\t-e\tset header variables as environment variables and spawn"
+            " new shell\n"
+            "\t\tProgram might be called using 'exec %s [args]' to\n"
+            "\t\tsubstitute shell with new one\n"
+            "\t-q\tbe quite on errors\n"
+            "\t-h\tprint this help message\n",
+            argv[0]
+        );
+        return 0;
       default:
         /* '?' */
-        fprintf(errs, "Usage: %s [-e] filename|-\n", argv[0]);
+        fprintf(errs, "Usage: %s [-eqh] filename|-\n", argv[0]);
         return 2;
     }
   }
