@@ -60,7 +60,7 @@ int http_read_file(FILE *file, uint8_t flags)
   size_t bytes_read = 0;
   while(bytes_read = fread(buffer, 1, BUFFER_SIZE, file))
   {
-    printf("%.*s", bytes_read, buffer);
+    fwrite(buffer, 1, BUFFER_SIZE, stdout);
   }
   setvbuf(stdout, (char*)NULL, _IONBF, 0);
 
