@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-static const unsigned int BUFFER_SIZE = 10;//0x1000;
+static const unsigned int BUFFER_SIZE = 0x1000;
 static const char CRLF[3] = "\r\n";
 
 /**
